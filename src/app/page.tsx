@@ -15,6 +15,7 @@ import styled from "styled-components";
 import fontNormal from "../../public/image/font-normal.svg";
 import speed1x from "../../public/image/1.0x.svg";
 import ExerciseCard from "@/components/ExerciseCard";
+import FinalSection from "@/components/FinalSection";
 
 const StyledWrapper = styled(Box)`
   flex-grow: 1;
@@ -47,6 +48,12 @@ const exercise = {
   注文: "點餐",
   お会計: "結帳",
 };
+
+const finalText = `
+感謝您體驗 JP Echo
+測試版！希望您喜歡我們的服務。我們誠摯地邀請您參與試用體驗心得調查，填寫內容將用以持續改善網站功能。待正式版本上線後，會第一時間邀請您來使用。謹代表
+JP Echo 開發團隊 感謝您提供的建議和心得。
+`;
 
 export default function Home() {
   const [stepIndex, setStepIndex] = useState(0);
@@ -107,6 +114,8 @@ export default function Home() {
         </Flex>
         {stepIndex === 1 ? (
           <ExerciseCard exercise={exercise} />
+        ) : stepIndex === steps.length - 1 ? (
+          <FinalSection text={finalText} />
         ) : (
           <AspectRatio overflow={"hidden"} ratio={2}>
             <iframe
