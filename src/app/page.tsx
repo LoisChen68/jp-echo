@@ -39,6 +39,15 @@ const steps = [
   "完成測驗！",
 ];
 
+const exercise = {
+  すみますん: "不好意思",
+  何名様ですか: "請問幾位",
+  大丈夫: "沒問題",
+  お願いします: "拜託",
+  注文: "點餐",
+  お会計: "結帳",
+};
+
 export default function Home() {
   const [stepIndex, setStepIndex] = useState(0);
 
@@ -96,12 +105,16 @@ export default function Home() {
             </Flex>
           </Center>
         </Flex>
-        <AspectRatio overflow={"hidden"} ratio={2}>
-          <iframe
-            src="https://www.youtube.com/embed/vd6mwUSiS40"
-            allowFullScreen
-          />
-        </AspectRatio>
+        {stepIndex === 1 ? (
+          <ExerciseCard exercise={exercise} />
+        ) : (
+          <AspectRatio overflow={"hidden"} ratio={2}>
+            <iframe
+              src="https://www.youtube.com/embed/vd6mwUSiS40"
+              allowFullScreen
+            />
+          </AspectRatio>
+        )}
       </StyledWrapper>
       {stepIndex !== steps.length - 1 && (
         <Flex
@@ -112,6 +125,8 @@ export default function Home() {
           justifyContent="space-around"
           alignItems="center"
           backgroundColor="var(--footer-background-color)"
+          backdropFilter="blur(5px)"
+          zIndex="999"
         >
           <IoIosArrowBack
             size="2rem"
