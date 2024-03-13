@@ -11,15 +11,10 @@ import {
 import { useState } from "react";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import Image from "next/image";
-import styled from "styled-components";
 import fontNormal from "../../public/image/font-normal.svg";
 import speed1x from "../../public/image/1.0x.svg";
 import ExerciseCard from "@/components/ExerciseCard";
 import FinalSection from "@/components/FinalSection";
-
-const StyledWrapper = styled(Box)`
-  flex-grow: 1;
-`;
 
 const steps = [
   "第一次播放：無字幕",
@@ -75,67 +70,79 @@ export default function Home() {
   };
 
   return (
-    <>
-      <StyledWrapper>
-        <Flex alignItems={"center"} padding={"30px"} gap="20px">
-          <CircularProgress
-            value={((stepIndex + 1) / steps.length) * 100}
-            color="var(--green)"
-            display="flex"
-            size="70px"
-          >
-            <CircularProgressLabel>
-              {stepIndex === steps.length - 1
-                ? "🎉"
-                : `${stepIndex + 1}/${steps.length}`}
-            </CircularProgressLabel>
-          </CircularProgress>
-          <Center>
-            <Flex flexDirection="column">
-              <Text fontSize="16px" margin="0px 0px 10px 0px" as="b">
-                {Array.isArray(currentStep) ? currentStep[0] : currentStep}
+    <Box width={{ base: "100%", lg: "90%" }}>
+      <Flex alignItems={"center"} gap="20px">
+        <CircularProgress
+          value={((stepIndex + 1) / steps.length) * 100}
+          color="var(--green)"
+          display="flex"
+          padding="30px"
+          size="70px"
+        >
+          <CircularProgressLabel>
+            {stepIndex === steps.length - 1
+              ? "🎉"
+              : `${stepIndex + 1}/${steps.length}`}
+          </CircularProgressLabel>
+        </CircularProgress>
+        <Center>
+          <Flex flexDirection="column">
+            <Text fontSize="16px" margin="0px 0px 10px 0px" as="b">
+              {Array.isArray(currentStep) ? currentStep[0] : currentStep}
+            </Text>
+            {stepIndex < steps.length - 1 && (
+              <Text
+                fontSize="12px"
+                margin="0px"
+                display="flex"
+                alignItems="center"
+                color="var(--gray-dark)"
+              >
+                <IoIosArrowForward onClick={handleNextStep} />
+                {Array.isArray(steps[stepIndex + 1])
+                  ? steps[stepIndex + 1][0]
+                  : steps[stepIndex + 1]}
               </Text>
-              {stepIndex < steps.length - 1 && (
-                <Text
-                  fontSize="12px"
-                  margin="0px"
-                  display="flex"
-                  alignItems="center"
-                  color="var(--gray-dark)"
-                >
-                  <IoIosArrowForward onClick={handleNextStep} />
-                  {Array.isArray(steps[stepIndex + 1])
-                    ? steps[stepIndex + 1][0]
-                    : steps[stepIndex + 1]}
-                </Text>
-              )}
-            </Flex>
-          </Center>
+            )}
+          </Flex>
+        </Center>
+      </Flex>
+      {stepIndex === 1 ? (
+        <ExerciseCard exercise={exercise} />
+      ) : stepIndex === steps.length - 1 ? (
+        <FinalSection text={finalText} />
+      ) : (
+        <Flex
+          justifyContent="center"
+          backgroundColor="var(--footer-background-color)"
+          borderRadius="10px"
+        >
+          <Box
+            width={{ base: "100%", sm: "80%", lg: "60%" }}
+            paddingY={{ base: "0px", sm: "10px" }}
+          >
+            <AspectRatio overflow={"hidden"} ratio={2}>
+              <iframe
+                src="https://www.youtube.com/embed/vd6mwUSiS40"
+                allowFullScreen
+              />
+            </AspectRatio>
+          </Box>
         </Flex>
-        {stepIndex === 1 ? (
-          <ExerciseCard exercise={exercise} />
-        ) : stepIndex === steps.length - 1 ? (
-          <FinalSection text={finalText} />
-        ) : (
-          <AspectRatio overflow={"hidden"} ratio={2}>
-            <iframe
-              src="https://www.youtube.com/embed/vd6mwUSiS40"
-              allowFullScreen
-            />
-          </AspectRatio>
-        )}
-      </StyledWrapper>
+      )}
       {stepIndex !== steps.length - 1 && (
         <Flex
           position="fixed"
           bottom="0px"
-          width="100%"
-          paddingBottom="10px"
+          marginBottom={{ base: "0", lg: "10px" }}
+          paddingBottom={{ base: "10px", lg: "0px" }}
+          width={{ base: "100%", lg: "90%" }}
           justifyContent="space-around"
           alignItems="center"
           backgroundColor="var(--footer-background-color)"
           backdropFilter="blur(5px)"
           zIndex="999"
+          borderRadius={{ base: "0px", lg: "50px" }}
         >
           <IoIosArrowBack
             size="2rem"
@@ -155,6 +162,6 @@ export default function Home() {
           />
         </Flex>
       )}
-    </>
+    </Box>
   );
 }

@@ -1,4 +1,4 @@
-import { Box, Card, CardBody, Flex, Text } from "@chakra-ui/react";
+import { Box, Card, CardBody, Flex, SimpleGrid, Text } from "@chakra-ui/react";
 import { FaCirclePlay } from "react-icons/fa6";
 
 const ExerciseCard = ({
@@ -7,7 +7,7 @@ const ExerciseCard = ({
   exercise: { [key: string]: string };
 }) => {
   return (
-    <Flex flexDirection={"column"}>
+    <SimpleGrid columns={{ base: 1, lg: 2 }} paddingBottom="80px">
       {Object.entries(exercise).map(([key, value]) => (
         <Card
           key={key}
@@ -30,7 +30,7 @@ const ExerciseCard = ({
           </CardBody>
         </Card>
       ))}
-    </Flex>
+    </SimpleGrid>
   );
 };
 
